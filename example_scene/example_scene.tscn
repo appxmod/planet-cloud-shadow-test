@@ -1,0 +1,183 @@
+[gd_scene load_steps=28 format=3 uid="uid://osbdruhhokep"]
+
+[ext_resource type="PackedScene" uid="uid://b2h7vvtud4217" path="res://planet/planet.tscn" id="1_4gqoi"]
+[ext_resource type="Script" path="res://example_scene/example_scene.gd" id="1_bgk2m"]
+[ext_resource type="Shader" path="res://planet/terrain.gdshader" id="2_l1icl"]
+[ext_resource type="Texture2D" uid="uid://dd4iu2rbj5ov2" path="res://example_scene/res/terrain_gradient.tres" id="3_rrr44"]
+[ext_resource type="Shader" path="res://planet/water.gdshader" id="4_kjvx8"]
+[ext_resource type="Texture2D" uid="uid://f6y3v5vrukxp" path="res://example_scene/res/water_gradient.tres" id="5_ardp0"]
+[ext_resource type="Shader" path="res://shaders/water.gdshader" id="7_pacmx"]
+[ext_resource type="Shader" path="res://shadow_test.gdshader" id="8_vbqcv"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_33v3h"]
+frequency = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5lwnw"]
+render_priority = 0
+shader = ExtResource("2_l1icl")
+shader_parameter/specular = 0.8
+shader_parameter/roughness = 0.6
+shader_parameter/radius = 32.0
+shader_parameter/height = 4.0
+shader_parameter/gradient = ExtResource("3_rrr44")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ueq1"]
+render_priority = 0
+shader = ExtResource("4_kjvx8")
+shader_parameter/specular = 0.4
+shader_parameter/roughness = 0.0
+shader_parameter/radius = 32.0
+shader_parameter/level = 34.0
+shader_parameter/gradient = ExtResource("5_ardp0")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_i6smv"]
+frequency = 0.007
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_caniq"]
+generate_mipmaps = false
+seamless = true
+seamless_blend_skirt = 0.5
+as_normal_map = true
+noise = SubResource("FastNoiseLite_i6smv")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jc4im"]
+noise_type = 0
+frequency = 0.02
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ymree"]
+generate_mipmaps = false
+seamless = true
+seamless_blend_skirt = 0.5
+as_normal_map = true
+noise = SubResource("FastNoiseLite_jc4im")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q7h20"]
+frequency = 0.0005
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hi0di"]
+generate_mipmaps = false
+seamless = true
+seamless_blend_skirt = 0.5
+noise = SubResource("FastNoiseLite_q7h20")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ygfug"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5nfc6"]
+render_priority = 0
+shader = ExtResource("7_pacmx")
+shader_parameter/color_shallow = Color(0.141232, 0.610255, 0.866567, 1)
+shader_parameter/color_deep = Color(0.605453, 0.78354, 0.877312, 1)
+shader_parameter/transparency = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 0.25
+shader_parameter/max_visible_depth = 20.0
+shader_parameter/wave_move_direction_a = Vector2(-1, 0)
+shader_parameter/wave_move_direction_b = Vector2(0, 1)
+shader_parameter/wave_noise_scale_a = 15.0
+shader_parameter/wave_noise_scale_b = 15.0
+shader_parameter/wave_time_scale_a = 0.15
+shader_parameter/wave_time_scale_b = 0.15
+shader_parameter/wave_height_scale = 1.0
+shader_parameter/wave_normal_flatness = 50.0
+shader_parameter/surface_normals_move_direction_a = Vector2(-1, 0.2)
+shader_parameter/surface_normals_move_direction_b = Vector2(0.2, 1)
+shader_parameter/surface_texture_roughness = 0.15
+shader_parameter/surface_texture_scale = 0.1
+shader_parameter/surface_texture_time_scale = 0.06
+shader_parameter/ssr_resolution = 1.0
+shader_parameter/ssr_max_travel = 15.0
+shader_parameter/ssr_max_diff = 4.0
+shader_parameter/ssr_mix_strength = 0.7
+shader_parameter/ssr_screen_border_fadeout = 0.3
+shader_parameter/refraction_intensity = 0.0
+shader_parameter/border_color = Color(0.491482, 0.624947, 0.604764, 1)
+shader_parameter/border_scale = 0.5
+shader_parameter/border_near = 0.27
+shader_parameter/border_far = 999.0
+shader_parameter/cut_out_x = 0.0
+shader_parameter/cut_out_z = 0.0
+shader_parameter/wave_a = SubResource("NoiseTexture2D_hi0di")
+shader_parameter/wave_b = SubResource("NoiseTexture2D_ygfug")
+shader_parameter/surface_normals_a = SubResource("NoiseTexture2D_caniq")
+shader_parameter/surface_normals_b = SubResource("NoiseTexture2D_ymree")
+
+[sub_resource type="SphereMesh" id="SphereMesh_6f4do"]
+radius = 1000.0
+height = 1000.0
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ipkc5"]
+
+[sub_resource type="Sky" id="Sky_esbpn"]
+sky_material = SubResource("ProceduralSkyMaterial_ipkc5")
+
+[sub_resource type="Environment" id="Environment_wf35m"]
+background_mode = 2
+sky = SubResource("Sky_esbpn")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_g7kyq"]
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_50iqh"]
+noise = SubResource("FastNoiseLite_g7kyq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mat7n"]
+render_priority = 0
+shader = ExtResource("8_vbqcv")
+shader_parameter/cloud_color = Color(1, 1, 1, 1)
+shader_parameter/scale = 2.0
+shader_parameter/density = 0.166
+shader_parameter/sharpness = 0.8
+shader_parameter/scroll_speed = Vector2(0.002, 0.001)
+shader_parameter/time_scale = 0.1
+shader_parameter/shadow_softness = 0.0
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_50iqh")
+
+[sub_resource type="SphereMesh" id="SphereMesh_eebpe"]
+radius = 26555.0
+height = 26555.0
+
+[node name="ExampleScene" type="Node3D"]
+script = ExtResource("1_bgk2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+visible = false
+shadow_enabled = true
+shadow_opacity = 0.9
+directional_shadow_mode = 1
+directional_shadow_split_1 = 0.3
+directional_shadow_blend_splits = true
+
+[node name="Planet" parent="." instance=ExtResource("1_4gqoi")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
+sphere_type = 1
+radius = 64.0
+detail = 256
+noise = SubResource("FastNoiseLite_33v3h")
+terrain_material = SubResource("ShaderMaterial_5lwnw")
+water_detail = 128
+water_material = SubResource("ShaderMaterial_7ueq1")
+
+[node name="Water2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_5nfc6")
+mesh = SubResource("SphereMesh_6f4do")
+skeleton = NodePath("")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wf35m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.634719, 0.632641, -0.443731, 0, 0.574229, 0.818695, 0.772743, -0.519642, 0.364474, -2538.52, 2175.28, 3136.1)
+shadow_enabled = true
+shadow_opacity = 0.28
+shadow_blur = 1.304
+directional_shadow_max_distance = 100000.0
+
+[node name="ShadowTest" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 19.2783, 0)
+material_override = SubResource("ShaderMaterial_mat7n")
+mesh = SubResource("SphereMesh_eebpe")
+skeleton = NodePath("")
